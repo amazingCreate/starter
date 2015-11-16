@@ -11,9 +11,8 @@
 <link rel="stylesheet" href="lib/jquery-ui/themes/smoothness/jquery-ui.css" />
 </head>
 <body>
-	<div class="chat-container">
-		<div ui-view></div>
-	</div>
+	<div ui-view></div>
+	<div ui-view="roomlist" style="top:0px;bottom:0px;position:absolute;width:100%;"></div>
 	<script src="lib/requirejs/require.js" data-main="scripts/main.js"></script>
 </body>
 </html>
