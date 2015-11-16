@@ -3,6 +3,8 @@
  */
 (function() {
   'use strict';
+  var connectingStatusListeners = [];
+
   define([ 'app', 'strophe' ], function(smc) {
     return smc.service('XMPPService', [
         '$rootScope',
@@ -18,6 +20,27 @@
             }
           };
 
+          me.addConnectingStatusListener = function(listener, scope) {
+            connectingStatusListeners.push([listener, scope]);
+          };
+          me.removeConnectingStatusListener = function(listener, scope) {
+            for (var i = 0; i < connectingStatusListeners.length; i++) {
+              if(connectingStatusListeners[i][0] === listener && connectingStatusListeners[i][1] === scope) {
+                connectingStatusListeners.splice(i,1);
+                break;
+              }
+            }
+          };
+          me.broadcastConnectingStatus = function() {
+            for (var i = 0; i < connectingStatusListeners.length; i++) {
+              try{
+                connectingStatusListeners[i][0](connectingStatusListeners[i][1], me.connectionStatus);
+              }catch(e) {
+                if(window.console) console.error('broadcastConnectingStatus fail:'+e.stack);
+              }
+            }
+          };
+          
           me.init = function(domain, boshUrl, pluginUrl, maxParticipants) {
             me.domainName = 'jyu131';// domain;
             me.BOSH_SERVICE = 'https://localhost:7443/http-bind/';// boshUrl;
@@ -38,32 +61,36 @@
             me.connectionStatus = status;
             if (status == Strophe.Status.CONNECTING) {
               if (window.console)
-                console.debug('connecting');
+                console.error('connecting');
               // xmpp.handleConnecting();
             } else if (status == Strophe.Status.CONNFAIL) {
               if (window.console)
-                console.debug('CONNFAIL');
+                console.error('CONNFAIL');
               // xmpp.handleConnectFailed();
             } else if (status == Strophe.Status.DISCONNECTING) {
               if (window.console)
-                console.debug('DISCONNECTING');
+                console.error('DISCONNECTING');
               // xmpp.handleDisconnecting();
             } else if (status == Strophe.Status.DISCONNECTED) {
               if (window.console)
-                console.debug('DISCONNECTED');
-              alert('xmpp.js disconnected');
+                console.error('DISCONNECTED');
               // xmpp.handleDisconnected();
             } else if (status == Strophe.Status.CONNECTED) {
               if (window.console)
-                console.debug('CONNECTED');
+                console.error('CONNECTED');
               me.handleConnected();
             } else if (status == Strophe.Status.AUTHFAIL) {
               if (window.console)
-                console.debug('AUTHFAIL');
+                console.error('AUTHFAIL');
               // xmpp.handleAuthFailed();
             }
+            me.broadcastConnectingStatus(status);
           };
 
+          me.getConnectionStatus = function() {
+            return me.connectionStatus;
+          };
+          
           me.handleConnected = function() {
             // Strophe is connected
             // connection.addHandler(xmpp.onPresenceHandler, null, 'presence');

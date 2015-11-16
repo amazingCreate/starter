@@ -1,12 +1,12 @@
 <div id="launchChatPanel" class="container-fluid" style="padding: 0px">
-	<div class="container-fluid" style="background-color: #00AA81;">
+	<div class="container-fluid" style="background-color: #5f798e;">
 		<div class="row">
-			<div class="col-xs-3 text-center" style="background-color: #00AA81;">
+			<div class="col-xs-3 text-center" style="background-color: #5f798e;">
 				<img class="img-circle"
 					style="width: 60px; height: 60px; margin-top: 5px; margin-bottom: 5px;"
 					src="http://www.w3schools.com/bootstrap/bird.jpg">
 			</div>
-			<div class="col-xs-7" style="background-color: #00AA81;">
+			<div class="col-xs-7" style="background-color: #5f798e;">
 				<div style="height: 20px;"></div>
 				<div style="color: white">
 					Hello <strong>Anna</strong>
@@ -16,10 +16,8 @@
 					Welcome to ask me anything!</div>
 			</div>
 			<div class="col-xs-2 text-right"
-				style="background-color: #00AA81; padding-top: 5px;">
-				<a href="#" class="btn btn-xs" style="color: white"> <span
-					class="" ui-sref="launchbtn">X</span>
-				</a>
+				style="background-color: #5f798e;">
+				<a href="#" class="btn btn-xs" style="font-size:30px;color: white" ui-sref="launchbtn">&times;</a>
 			</div>
 		</div>
 	</div>
@@ -31,16 +29,28 @@
 						style="color: red; width: 10px; height: 10px; line-height: normal; vertical-align: middle;">*</label><label
 						for="question">Describe your question</label>
 					<textarea ng-model="question" class="form-control"
-						style="resize: none" id="question" name="question"
+						style="resize: none;background-color:#f2f2f2" id="question" name="question"
 						placeholder="question" type="text" rows="5" required></textarea>
 				</div>
+			</div>
+			<div class="row" style="margin-bottom:5px;" ng-show="isConnecting">
+				<img class="img-circle"
+					style="width: 20px; height: 20px;margin-left:15px;"
+					src="http://www.w3schools.com/bootstrap/bird.jpg">
+				<span style="color:red;">Unable to connect!</span>
+			</div>
+			<div class="row text-center" style="margin-bottom:5px;" ng-show="isStarting">
+				<img class="img-circle"
+					style="width: 20px; height: 20px;margin-left:15px;"
+					src="http://www.w3schools.com/bootstrap/bird.jpg">
 			</div>
 			<div class="row">
 				<div class="col-xs-12 form-group">
 					<!-- chatQuestion.$invalid -->
 					<button ng-disabled="question == null || question.length == 0"
 						ng-click="startChat()" class="btn btn-block"
-						style="background-color: #00AA81; color: white">{{'launchBtn.btnName'|i18next}}</button>
+						style="background-color: #00aa81; color: white">Start
+						Chat</button>
 				</div>
 			</div>
 		</form>

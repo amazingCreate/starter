@@ -1,0 +1,39 @@
+<div id="launchConnectingPanel" class="container-fluid" style="padding: 0px">
+	<div class="container-fluid text-right" style="background-color: #5f798e;">
+		<a href="#" class="btn btn-xs" style="font-size:30px;color: white" ui-sref="launchbtn">&times;</a>
+	</div>
+	<div class="container-fluid" ng-show="isConnecting" style="background-color: #5f798e;height:300px;">
+		<div class="row" style="position:relative;top:80px;">
+			<div class="col-xs-12 text-center" style="background-color: #5f798e;">
+				<img class="img-circle"
+					style="width: 60px; height: 60px; margin-top: 5px; margin-bottom: 5px;"
+					src="http://www.w3schools.com/bootstrap/bird.jpg">
+			</div>
+		</div>
+		<div class="row" style="position:relative;top:80px;">
+			<div class="col-xs-12 text-center" style="background-color: #5f798e; color:white;">
+				<span>connecting</span>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" ng-hide="isConnecting" style="background-color: #5f798e;height:300px;">
+		<div class="row" style="position:relative;top:50px;">
+			<div class="col-xs-12 text-center" style="background-color: #5f798e;">
+				<img class="img-circle"
+					style="width: 60px; height: 60px; margin-top: 5px; margin-bottom: 5px;"
+					src="http://www.w3schools.com/bootstrap/bird.jpg">
+			</div>
+		</div>
+		<div class="row" style="position:relative;top:70px;">
+			<div class="col-xs-12 text-center" style="background-color: #5f798e; color:white;">
+				<span>unable to connect</span>
+			</div>
+		</div>
+		<div class="row" style="position:relative;top:110px;">
+			<div class="col-xs-12 text-center" style="background-color: #5f798e; color:white;">
+				<button ng-click="reconnect()" class="btn"
+						style="background-color: #ff8d69; color: white">Reconnect</button>
+			</div>
+		</div>
+	</div>
+</div>
