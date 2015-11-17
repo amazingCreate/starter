@@ -3,7 +3,7 @@
 
   define([ "angular", 'angular-route', 'angular-ui-router', 'angular-cookies',
       'angular-sanitize', 'angular-resource', 'angular-animate',
-      'ui.bootstrap', 'ng-i18next' ], function(angular) {
+      'ui.bootstrap', 'ng-i18next','perfectScrollbar','perfectScrollbarJQuery'], function(angular) {
     /**
      * @ngdoc overview
      * @name chatClientApp
@@ -14,7 +14,10 @@
     var smcModule = angular.module('smc', [ 'ngAnimate', 'ngCookies',
         'ngResource', 'ui.router', 'ngRoute', 'ngSanitize', 'ui.bootstrap',
         'jm.i18next' ]);
-
+    smcModule.run(function(){
+      //window.Ps = require('perfectScrollbar');
+      //require('perfectScrollbarJQuery');
+    });
     // Register all constants here
     smcModule.constant('SMC_CONSTANTS', {
       'CHAT_HTMLLIZE_PREFIX' : 'htmlize-',

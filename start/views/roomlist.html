@@ -1,6 +1,6 @@
 <div class="container-fluid" style="height:100%;">
 	<div class="row" style="height:100%;">
-		<div class="col-xs-3" style="height:100%;overflow:auto;">
+		<div id="roomlist" class="col-xs-3" style="height:100%;overflow:hidden;">
 			<div class="list-group">
 				<input type="text" ng-model="query" placeholder="Search for..." class="list-group-item" style="width:100%;margin:5px 0px;"/>
 				<a href="#" class="list-group-item" ng-class="{'active' : x.selected}" ng-repeat="x in rooms | filter:query" ng-click="selectRoom(x.roomName)">
@@ -13,15 +13,22 @@
 		</div>
 		<div class="col-xs-9" style="height:100%;" ng-repeat="x in rooms" ng-show="x.selected">
 			<div class="container-fluid" style="height:50px;background-color: #dff0d8;color:#3c763d;">
-				<button type="button" class="close"  style="font-size:41px;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button type="button" ng-show="x.state == 'connected'"  class="close"  style="font-size:41px;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button type="button" ng-hide="x.state == 'connected'" class="btn btn-default" style="float:right;">Join</button>
 				<div>{{ x.roomName }}</div>
 				<div>{{ x.description }}</div>
 			</div>
-			<div class="container-fluid" style="height:calc(100% - 160px);">
-				<div>new messages</div>
-				<div>new messages</div><div>new messages</div><div>new messages</div>
+			<div id="chatlog_{{x.roomName}}" ng-hide="x.state == 'neverConnected'" class="container-fluid" style="position:relative;height:calc(100% - 160px);overflow:hidden;">
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
+				<div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div><div>new messages</div>
 			</div>
-			<div class="container-fluid" style="height:100px;"><textarea style="width:100%;resize:none;height:100%;" rows="4"></textarea></div>
+			<div ng-hide="x.state == 'neverConnected'" class="container-fluid" style="height:100px;"><textarea ng-disabled="x.state == 'disconnected'" style="width:100%;resize:none;height:100%;" rows="4"></textarea></div>
 		</div>
 	</div>
 </div>

@@ -14,6 +14,8 @@ var debugPath = {
   'i18next': '../lib/i18next/i18next',
   'ng-i18next': '../lib/ng-i18next/dist/ng-i18next',
   'strophe':'../lib/strophejs/strophe',
+  'perfectScrollbarJQuery': '../lib/perfect-scrollbar/js/perfect-scrollbar.jquery',
+  'perfectScrollbar': '../lib/perfect-scrollbar/js/perfect-scrollbar'
 };
 
 var runtimePath = {
@@ -31,6 +33,8 @@ var runtimePath = {
   'i18next': '../lib/i18next/i18next.min',
   'ng-i18next': '../lib/ng-i18next/dist/ng-i18next.min',
   'strophe':'../lib/strophejs/strophe.min',
+  'perfectScrollbarJQuery': '../lib/perfect-scrollbar/js/min/perfect-scrollbar.jquery.min',
+  'perfectScrollbar': '../lib/perfect-scrollbar/js/min/perfect-scrollbar.min'
 };
 
 var debugMode = false;

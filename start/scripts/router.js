@@ -12,7 +12,7 @@
       .state('roomlist', {
         url:'/roomlist',
         views: {
-          'roomlist': {
+          '': {
             templateUrl: 'views/roomlist.html',
             controller: 'RoomListCtrl',
             constrollerAs: 'vm',
