@@ -109,18 +109,31 @@
             var pubName = 'test5';
             // me.subscribeToPub(pubName);//, me.broadcastToPub.bind(this,
             // pubName, 'hello', XMPP.JID)
-            me.getSubscriptions(function(subs) {
-              var found = false;
-              for (var i = 0; i < subs.length; i++) {
-                if (subs[i] == pubName) {
-                  found = true;
-                  break;
-                }
-              }
-              // I have never subscribed to this pub, now subscribe to it
-              if (!found) {
-                me.subscribeToPub(pubName);
-              }
+//            me.getSubscriptions(function(subs) {
+//              var found = false;
+//              for (var i = 0; i < subs.length; i++) {
+//                if (subs[i] == pubName) {
+//                  found = true;
+//                  break;
+//                }
+//              }
+//              // I have never subscribed to this pub, now subscribe to it
+//              if (!found) {
+//                me.subscribeToPub(pubName);
+//              }
+//            });
+            //////////////////////
+//            0c1c8c0d-6feb-480a-be25-3fd9eab54b2e@conference.jyu131
+//            1536ab83-63a8-48e7-9f11-50c09808aaf1@conference.jyu131
+//            487570e7-038f-4176-8a6c-8c6c1acc9636@conference.jyu131
+            var roomName = 'aaaa';
+            var iq = $iq({type:'get', id:'getRoomArchiveList'})
+                          .c('list', {xmlns:'urn:xmpp:archive', 'with':roomName+'@conference.'+me.domainName})
+                          .c('set', {xmlns:'http://jabber.org/protocol/rsm'});
+            me.connection.sendIQ(iq, function(ret){
+              console.error(ret.innerHTML);
+            }, function(ret){
+              console.error(ret.innerHTML);
             });
           };
           me.broadcastToPub = function(pubName, msg, who) {

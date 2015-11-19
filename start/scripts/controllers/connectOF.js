@@ -12,7 +12,7 @@
         //click reconnect button
         $scope.reconnect = function() {
           $scope.isConnecting = true;
-          XMPPService.connect('admin','1','');
+          XMPPService.connect('falcon','1','');
         };
         $scope.onConnecting = function(scope, status) {
           if(status == Strophe.Status.CONNECTING) {

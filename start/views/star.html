@@ -1,0 +1,7 @@
+<table style="width: {{34*columns}}px; height: {{34*rows}}px">
+	<tr ng-repeat="row1 in stars" data-rownum="{{$index}}">
+		<td ng-repeat="col1 in row1 track by $index" data-colnum="{{$index}}">
+			<button type="button" class="btn btn-default" style="background-color:{{getColor(col1)}}" ng-click="clickBtn(this)">{{col1}}</button>
+		</td>
+	</tr>
+</table>
