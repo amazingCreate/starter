@@ -8,21 +8,13 @@
         function getRandomColor() {
           return Math.floor(Math.random() * 4) + 1;  
         };
-        var colors = ['red', 'green', 'yellow', 'blue', 'purple'];
+        var colors = ['blue', 'green', 'rgb(255, 87, 0)', 'black', 'purple'];
         $scope.getColor = function(colorId) {
           return colors[colorId - 1];
         };
         
         $scope.rows = 10;
         $scope.columns = 10;
-        var stars = new Array($scope.rows);
-        for (var i = 0; i < stars.length; i++) {
-          stars[i] = new Array($scope.columns);
-          for (var j = 0; j < stars[i].length; j++) {
-            stars[i][j] = getRandomColor();
-          }
-        }
-        $scope.stars = stars;
         
         $scope.clickBtn = function(ele) {
           var row = ele.$parent.$index;
@@ -31,16 +23,45 @@
           compact();
           cleanNegativeValue();
           removeEmptyColumn();
+          if(isAllDone()) {
+            alert('done');
+          }
+          showCurrentStars();
+        };
+        $scope.init = function() {
+          var stars = new Array($scope.rows);
+          for (var i = 0; i < stars.length; i++) {
+            stars[i] = new Array($scope.columns);
+            for (var j = 0; j < stars[i].length; j++) {
+              stars[i][j] = getRandomColor();
+            }
+          }
+          $scope.stars = stars;
+        };
+        
+        $scope.init();
+        
+        function showCurrentStars() {
           var ret = '';
           for(var row = 0;row<$scope.rows;row++) {
             ret += $scope.stars[row].join(',')+'\n'
           }
           console.error(ret);
-        };
+        }
+        function isAllDone() {
+          for (var row = 0; row < $scope.rows; row++) {
+            for (var col = 0; col < $scope.columns; col++) {
+              if ($scope.stars[row][col] > 0) {
+                return false;
+              }
+            }
+          }
+          return true;
+        }
         function cleanNegativeValue() {
-          for(var row = 0;row<$scope.rows;row++) {
-            for(var col = 0;col<$scope.columns;col++) {
-              if($scope.stars[row][col] < 0) {
+          for (var row = 0; row < $scope.rows; row++) {
+            for (var col = 0; col < $scope.columns; col++) {
+              if ($scope.stars[row][col] < 0) {
                 $scope.stars[row][col] = 0;
               }
             }
@@ -49,6 +70,9 @@
         function removeEmptyColumn() {
           for (var i = 0; i < $scope.columns - 1; i++) {
             if(isEmptyColumn(i)) {
+              if(isRightSideEmpty(i)) {
+                return;
+              }
               for (var row = 0; row < $scope.rows; row++) {
                 for (var col = i; col < $scope.columns - 1; col++) {
                   $scope.stars[row][col] = $scope.stars[row][col+1];
@@ -66,6 +90,14 @@
             }
           }
           return true;
+        }
+        function isRightSideEmpty(col) {
+        	for (var i = col + 1; i < $scope.columns; i++) {
+            if ($scope.stars[$scope.rows - 1][i] > 0) {
+              return false;
+            }
+          }
+        	return true;
         }
         function compact() {
           for (var col = 0; col < $scope.columns; col++) {

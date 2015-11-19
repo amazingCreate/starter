@@ -1,7 +1,8 @@
-<table style="width: {{34*columns}}px; height: {{34*rows}}px">
+<table style="width: {{40*columns}}px; height: {{40*rows}}px">
 	<tr ng-repeat="row1 in stars" data-rownum="{{$index}}">
 		<td ng-repeat="col1 in row1 track by $index" data-colnum="{{$index}}">
-			<button type="button" class="btn btn-default" style="background-color:{{getColor(col1)}}" ng-click="clickBtn(this)">{{col1}}</button>
+			<button type="button" class="btn btn-default" style="background-color:{{getColor(col1)}};min-height:40px;min-width:40px;" ng-click="clickBtn(this)"></button>
 		</td>
 	</tr>
 </table>
+<button type="button" class="btn btn-default" ng-click="init()">New Game</button>
