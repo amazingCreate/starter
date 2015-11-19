@@ -29,15 +29,23 @@
           var col = ele.$index;
           markCellAndNeighbours(row, col);
           compact();
+          cleanNegativeValue();
           removeEmptyColumn();
-//          var ret = '';
-//          for(var row = 0;row<$scope.rows;row++) {
-//            console
-//            for(var col=0;col<$scope.columns;col++) {
-//              
-//            }
-//          }
+          var ret = '';
+          for(var row = 0;row<$scope.rows;row++) {
+            ret += $scope.stars[row].join(',')+'\n'
+          }
+          console.error(ret);
         };
+        function cleanNegativeValue() {
+          for(var row = 0;row<$scope.rows;row++) {
+            for(var col = 0;col<$scope.columns;col++) {
+              if($scope.stars[row][col] < 0) {
+                $scope.stars[row][col] = 0;
+              }
+            }
+          }
+        }
         function removeEmptyColumn() {
           for (var i = 0; i < $scope.columns - 1; i++) {
             if(isEmptyColumn(i)) {
