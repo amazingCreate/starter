@@ -3,12 +3,20 @@
   define(['app', 'angular', 'controllers/connectOF', 'controllers/launchchat', 'controllers/roomlist', 'controllers/star'], function (smc, angular) {
     smc.config(function ($stateProvider, $urlRouterProvider) {
       // if there is no specific URL, go the the main window
-      $urlRouterProvider.when('/', '/star');
-      $urlRouterProvider.otherwise('/star');
+      $urlRouterProvider.when('/', '/chart');
+      $urlRouterProvider.otherwise('/chart');
 
       //if use $state.go(), the backspace seems doesn't work well, always show a blank url like 'index.html#'
       //so use ui-sref="launchstart", then backspace works well
       $stateProvider
+      .state('chart', {
+        url:'/chart',
+        views: {
+          '': {
+            templateUrl: 'views/chart.html'
+          }
+        }
+      })
       .state('star', {
         url:'/star',
         views: {
