@@ -6,6 +6,7 @@
       function ($scope, $compile,$sce,$state,$timeout, $http, SMC_CONSTANTS) {
         //
         function getRandomColor() {
+          //totally 4 colors
           return Math.floor(Math.random() * 4) + 1;  
         };
         var colors = ['blue', 'green', 'rgb(255, 87, 0)', 'black', 'purple'];
@@ -13,15 +14,21 @@
           return colors[colorId - 1];
         };
         
+        //10 X 10 table
         $scope.rows = 10;
         $scope.columns = 10;
         
         $scope.clickBtn = function(ele) {
           var row = ele.$parent.$index;
           var col = ele.$index;
+          
+          //if one block is clicked, mark it and its neighbours as cleared
           markCellAndNeighbours(row, col);
+          //move above blocks down
           compact();
+          //then set cleared blocks to '0'
           cleanNegativeValue();
+          //if there're empty columns, move their right blocks to left
           removeEmptyColumn();
           if(isAllDone()) {
             alert('done');
@@ -58,6 +65,10 @@
           }
           return true;
         }
+        //after all works done, set negative value to '0'
+        //we use negative value to indicate one block is going to be cleared
+        //if set to '0' directly, then I can't distinguish whether one block is lonely or has a just now pressed neighbour
+        //for lonely block, no action, for block with just pressed neighbour, the block should be cleared too
         function cleanNegativeValue() {
           for (var row = 0; row < $scope.rows; row++) {
             for (var col = 0; col < $scope.columns; col++) {
@@ -67,6 +78,8 @@
             }
           }
         }
+        
+        //find out empty columns, move right side blocks to left
         function removeEmptyColumn() {
           for (var i = 0; i < $scope.columns - 1; i++) {
             if(isEmptyColumn(i)) {
@@ -83,6 +96,9 @@
             }
           }
         }
+        
+        //check whether current column is empty now
+        //if empty, then move right blocks to left
         function isEmptyColumn(col) {
           for (var i = 0; i < $scope.rows; i++) {
             if ($scope.stars[i][col] > 0) {
@@ -91,6 +107,9 @@
           }
           return true;
         }
+        
+        //check whether the right side of current column is empty or not
+        //if empty, then no need move right blocks to left
         function isRightSideEmpty(col) {
         	for (var i = col + 1; i < $scope.columns; i++) {
             if ($scope.stars[$scope.rows - 1][i] > 0) {
@@ -99,6 +118,8 @@
           }
         	return true;
         }
+        
+        //move above blocks down, and set value to '0', means the block is cleared
         function compact() {
           for (var col = 0; col < $scope.columns; col++) {
             for (var row = $scope.rows - 1; row > 0; row--) {
@@ -121,6 +142,8 @@
           }
           $scope.stars[i][col] = 0;
         }
+        
+        //check whether there're non-empty block above me
         function hasMoreAbove(row, col) {
           for (var i = row - 1; i >= 0; i--) {
             if($scope.stars[i][col] > 0) {
@@ -129,12 +152,15 @@
           }
           return false;
         }
+        
+        //set me and my neighbours to negative value
         function markCellAndNeighbours(row, col) {
           var top = getNeighbour(row, col, 'top');
           var left = getNeighbour(row, col, 'left');
           var right = getNeighbour(row, col, 'right');
           var bottom = getNeighbour(row, col, 'bottom');
           if(top || left || right || bottom) {
+            //I have neighbour, so set value to negative one, then will be set to '0' soon
             $scope.stars[row][col] = -1*($scope.stars[row][col]);
           }
           if(top && $scope.stars[top[0]][top[1]] > 0) {
@@ -150,6 +176,8 @@
             markCellAndNeighbours(bottom[0], bottom[1]);
           }
         }
+        //if top/right/bottom/left value is same as me or negative to me, it's my neighbor
+        //negative means, the neighbour is just pressed, the value will be changed to '0' soon
         function getNeighbour(row, col, position) {
           var currentValue = $scope.stars[row][col];
           if(position == 'top') {
